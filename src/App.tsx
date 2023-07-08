@@ -9,10 +9,10 @@ import { Dayjs } from 'dayjs'
 
 function App() {
   const [currentMonth, setCurrentMonth] = useState<Dayjs[][]>(getMonth())
-  const { monthIndex }: GlobalContextType | any = useContext(GlobalContext);
+  const { monthIndex } = useContext<GlobalContextType>(GlobalContext);
 
   useEffect(() => {
-    setCurrentMonth(monthIndex)
+    setCurrentMonth(getMonth(monthIndex))
   }), [monthIndex]
 
   return (

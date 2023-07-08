@@ -1,10 +1,14 @@
-import React from 'react'
 import 'tailwindcss/tailwind.css';
+import CreateEventButton from './CreateEventButton';
+import SmallCalendar from './SmallCalendar';
 
 
 const Sidebar = () => {
     return (
-        <div className='text-red-500'>Sidebar</div>
+        <aside className='border p-5 w-64'>
+            <CreateEventButton />
+            <SmallCalendar />
+        </aside>
     )
 }
 

@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import 'tailwindcss/tailwind.css';
+import ContextWrapper from './context/Wrapper.tsx';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <ContextWrapper>
+      <App />
+    </ContextWrapper>
   </React.StrictMode>,
 )

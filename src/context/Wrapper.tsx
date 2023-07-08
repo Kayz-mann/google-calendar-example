@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import GlobalContext from './GlobalContext';
+import GlobalContext, { GlobalContextType } from './GlobalContext';
 
 interface ContextProps {
     children: React.ReactNode;
@@ -8,9 +8,25 @@ interface ContextProps {
 
 const ContextWrapper: React.FC<ContextProps> = ({ children }) => {
     const [monthIndex, setMonthIndex] = useState<number>(dayjs().month());
+    const [smallCalendarMonth, setSmallCalendarMonth] = useState<number>(0);
+    const [selectedDay, setSelectedDay] = useState<null>(null);
+
+    useEffect(() => {
+        if (smallCalendarMonth !== null) {
+            setMonthIndex(smallCalendarMonth)
+        }
+    }, [smallCalendarMonth]);
 
     return (
-        <GlobalContext.Provider value={{ monthIndex, setMonthIndex }}>
+        <GlobalContext.Provider
+            value={{
+                monthIndex,
+                setMonthIndex,
+                smallCalendarMonth,
+                setSmallCalendarMonth,
+                selectedDay,
+                setSelectedDay: () => { setSelectedDay(null) },
+            }}>
             {children}
         </GlobalContext.Provider>
     );
