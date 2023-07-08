@@ -8,6 +8,8 @@ export interface GlobalContextType {
   setSmallCalendarMonth: (index: number) => void;
   selectedDay: Dayjs | null;
   setSelectedDay: (day: Dayjs | null) => void;
+  showEventModal: boolean;
+  setShowEventModal: (value: boolean) => void;
 }
 
 const GlobalContext = React.createContext<GlobalContextType>({
@@ -17,6 +19,8 @@ const GlobalContext = React.createContext<GlobalContextType>({
   setSmallCalendarMonth: () => { },
   selectedDay: null,
   setSelectedDay: () => { },
+  showEventModal: false,
+  setShowEventModal: () => { },
 });
 
 export default GlobalContext;
