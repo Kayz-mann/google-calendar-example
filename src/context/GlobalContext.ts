@@ -1,5 +1,6 @@
 import { Dayjs } from "dayjs";
 import React from "react";
+import { Action, Event } from "./Wrapper";
 
 export interface GlobalContextType {
   monthIndex: number;
@@ -10,6 +11,10 @@ export interface GlobalContextType {
   setSelectedDay: (day: Dayjs | null) => void;
   showEventModal: boolean;
   setShowEventModal: (value: boolean) => void;
+  savedEvents: Event[];
+  dispatch: React.Dispatch<Action>;
+  selectedEvent: Event | null;
+  setSelectedEvent: (event: Event | null) => void;
 }
 
 const GlobalContext = React.createContext<GlobalContextType>({
@@ -21,6 +26,10 @@ const GlobalContext = React.createContext<GlobalContextType>({
   setSelectedDay: () => { },
   showEventModal: false,
   setShowEventModal: () => { },
+  savedEvents: [],
+  dispatch: () => { },
+  selectedEvent: null,
+  setSelectedEvent: () => { },
 });
 
 export default GlobalContext;

@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex))
-  }), [monthIndex]
+  }, [monthIndex])
 
   return (
     <React.Fragment>
