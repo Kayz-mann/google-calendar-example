@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useMemo, useReducer, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import GlobalContext from './GlobalContext';
 
@@ -11,7 +11,7 @@ export interface Event {
     day: Dayjs | undefined;
     title: string;
     description: string;
-    label: string // Update the type declaration of the 'day' property
+    label: string;
     // Add other properties as needed
 }
 
@@ -50,21 +50,45 @@ const ContextWrapper: React.FC<ContextProps> = ({ children }) => {
     const [selectedDay, setSelectedDay] = useState<Dayjs | null>(dayjs());
     const [showEventModal, setShowEventModal] = useState<boolean>(false);
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+    const [labels, setLabels] = useState<any[]>([]);
     const [savedEvents, dispatch] = useReducer(
         savedEventsReducer,
         [],
         initialEvents
     );
 
+    const filteredEvents = useMemo(() => {
+        return savedEvents.filter((evt) =>
+            labels.filter((lbl) => lbl.checked)
+                .map((lbl) => lbl.label)
+                .includes(evt.label))
+    }, [savedEvents, labels])
+
     useEffect(() => {
         localStorage.setItem('savedEvents', JSON.stringify(savedEvents));
+    }, [savedEvents]);
+
+    useEffect(() => {
+        setLabels((prevLabels) => {
+            return [...new Set(savedEvents.map((evt) => evt.label))];
+        });
     }, [savedEvents]);
 
     useEffect(() => {
         if (smallCalendarMonth !== null && smallCalendarMonth !== monthIndex) {
             setMonthIndex(smallCalendarMonth);
         }
-    }, [smallCalendarMonth, monthIndex]);
+    }, [smallCalendarMonth]);
+
+    useEffect(() => {
+        if (!showEventModal) {
+            setSelectedEvent(null)
+        }
+    }, [showEventModal])
+
+    const updateLabel = (label: any) => {
+        setLabels(labels.map((lbl) => lbl.label === label.label ? label : lbl))
+    }
 
     const handleSetSelectedDay = () => {
         setSelectedDay(dayjs());
@@ -83,6 +107,10 @@ const ContextWrapper: React.FC<ContextProps> = ({ children }) => {
         dispatch,
         selectedEvent,
         setSelectedEvent,
+        setLabels,
+        labels,
+        updateLabel,
+        filteredEvents
     };
 
     return (

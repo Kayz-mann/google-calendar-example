@@ -9,10 +9,10 @@ interface DayProps {
 
 const Day: React.FC<DayProps> = ({ day, rowIdx }) => {
     const [dayEvents, setDayEvents] = useState<any[]>([])
-    const { setShowEventModal, setSelectedDay, savedEvents, setSelectedEvent } = useContext<GlobalContextType>(GlobalContext)
+    const { setShowEventModal, setSelectedDay, savedEvents, setSelectedEvent, filteredEvents } = useContext<GlobalContextType>(GlobalContext)
 
     useEffect(() => {
-        const events = savedEvents.filter((evt: any) => {
+        const events = filteredEvents.filter((evt: any) => {
             const eventDay = dayjs(evt.day);
             return eventDay.isValid() && eventDay.format("DD-MM-YY") === day.format("DD-MM-YY");
         });

@@ -1,6 +1,7 @@
 import 'tailwindcss/tailwind.css';
 import CreateEventButton from './CreateEventButton';
 import SmallCalendar from './SmallCalendar';
+import Labels from './Labels';
 
 
 const Sidebar = () => {
@@ -8,6 +9,7 @@ const Sidebar = () => {
         <aside className='border p-5 w-64'>
             <CreateEventButton />
             <SmallCalendar />
+            <Labels />
         </aside>
     )
 }
